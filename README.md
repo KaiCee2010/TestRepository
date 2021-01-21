@@ -191,3 +191,133 @@ Promise.all([d3.json("county_counts.json"), d3.json("cause_counts.json")]).then(
 function onlyUnique(value,index, self) {
 	return self.indexOf(value) === index;	
 }
+
+
+# New stuff
+
+data cleanup
+
+# Import standard library modules
+import arcpy, os, sys
+from arcpy import env
+import datetime
+
+
+# Allow for file overwrite
+arcpy.env.overwriteOutput = True
+
+# Set the workspace directory 
+workspace = r"C:\Users\kcyoung\Downloads\Drought" 
+
+
+
+# Get the list of the featureclasses to process
+# fc_tables = arcpy.ListFeatureClasses()
+# folder_name = ['Set1', 'Set2']
+# print(fc_tables)
+
+feature_classes = []
+
+walk = arcpy.da.Walk(workspace, datatype="FeatureClass", type="Polygon")
+
+filePath = os.path.join("C:", "users", "kcyoung", "downloads","Drought")
+for dirpath, dirnames, filenames in walk:
+    fc_tables = arcpy.ListFeatureClasses()
+    print(dirpath)
+    print(dirnames)
+    print(filenames)
+    for filename in filenames:
+        # Define field name and expression
+        field1 = "FILENAME"
+        field2 = "START_DATE"
+        field3 = "END_DATE"
+
+
+        # Create a new field with a new name
+        arcpy.AddField_management(filename,field1,"TEXT")
+        arcpy.AddField_management(filename,field2,"TEXT")
+        arcpy.AddField_management(filename,field3,"TEXT")
+
+#         # Calculate field here
+#         arcpy.CalculateField_management(filename, field1, '"'+fName+'"', "PYTHON")
+#         arcpy.CalculateField_management(filename, field2, '"'+startDate+'"', "PYTHON")
+#         arcpy.CalculateField_management(filename, field3, '"'+endDate+'"', "PYTHON")
+
+    
+
+# for dirpath, dirnames, filenames in walk:
+#     for filename in filenames:
+#         print("processing " + str(filename))
+        
+#         fName=str(filename)
+#         fName=fName.replace(".shp", "")
+#         fName=fName.replace("USDM_", "")
+#         print(fName)
+
+#         eDate = datetime.datetime.strptime(fName, "%Y%m%d").date()
+#         print("end date", eDate)
+#         sDate = eDate - datetime.timedelta(days=7)
+#         print("start date", sDate)
+        
+#         endDate = str(eDate)
+#         startDate = str(sDate)
+
+#         # Define field name and expression
+#         field1 = "FILENAME"
+#         field2 = "START_DATE"
+#         field3 = "END_DATE"
+
+
+#         # Create a new field with a new name
+#         arcpy.AddField_management(filename,field1,"TEXT")
+#         arcpy.AddField_management(filename,field2,"TEXT")
+#         arcpy.AddField_management(filename,field3,"TEXT")
+
+#         # Calculate field here
+#         arcpy.CalculateField_management(filename, field1, '"'+fName+'"', "PYTHON")
+#         arcpy.CalculateField_management(filename, field2, '"'+startDate+'"', "PYTHON")
+#         arcpy.CalculateField_management(filename, field3, '"'+endDate+'"', "PYTHON")
+        
+#         feature_classes.append(os.path.join(dirpath, filename))
+        
+# location = r"C:\Users\kcyoung\Downloads\Data.gdb\Sets"
+# arcpy.Merge_management(feature_classes, location)
+
+# for dirpath, dirnames, filenames in arcpy.da.Walk(workspace,datatype="FeatureClass", type="Polygon"):
+#     # Loop through each file and perform the processing
+#     for filename in filenames:
+#         print("processing " + str(fc))
+#         fName=str(filename)
+#         fName=fName.replace(".shp", "")
+#         fName=fName.replace("USDM_", "")
+#         print(fName)
+
+#         eDate = datetime.datetime.strptime(fName, "%Y%m%d").date()
+#         print("end date", eDate)
+#         sDate = eDate - datetime.timedelta(days=7)
+#         print("start date", sDate)
+        
+#         desc = arcpy.Describe(os.path.join(dirpath, filename)  
+#         feature_classes.append(os.path.join(dirpath, filename))
+        
+    
+
+#         endDate = str(eDate)
+#         startDate = str(sDate)
+
+#         # Define field name and expression
+#         field1 = "FILENAME"
+#         field2 = "START_DATE"
+#         field3 = "END_DATE"
+
+
+#         # Create a new field with a new name
+#         arcpy.AddField_management(fc,field1,"TEXT")
+#         arcpy.AddField_management(fc,field2,"TEXT")
+#         arcpy.AddField_management(fc,field3,"TEXT")
+
+#         # Calculate field here
+#         arcpy.CalculateField_management(fc, field1, '"'+fName+'"', "PYTHON")
+#         arcpy.CalculateField_management(fc, field2, '"'+startDate+'"', "PYTHON")
+#         arcpy.CalculateField_management(fc, field3, '"'+endDate+'"', "PYTHON")
+
